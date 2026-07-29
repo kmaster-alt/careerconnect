@@ -8,21 +8,24 @@ CareerConnect is a web application that helps users find remote job opportunitie
 - Filter jobs by category
 - Sort jobs from A-Z and Z-A
 - Responsive design for different devices
-- Displays company, location, category, and application link
+- Displays job title, company, location, category, and application link
 - Handles API errors with user-friendly messages
+- Loading messages while fetching data
 
 ## API Used
 
 CareerConnect uses the Remotive Remote Jobs API.
 
-API:
+API Endpoint:
+
 https://remotive.com/api/remote-jobs
 
-The API provides remote job listings from different companies.
+The API provides remote job listings from different companies around the world.
 
 No API key is required.
 
 Credit:
+
 Remotive API  
 https://remotive.com/
 
@@ -32,6 +35,8 @@ https://remotive.com/
 - CSS
 - JavaScript
 - Fetch API
+- Nginx
+- HAProxy
 
 ## Running Locally
 
