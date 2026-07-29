@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>CareerConnect</h1>
+    <p>Find remote jobs from trusted companies</p>
+</header>
+
+<section class="search-box">
+    <input type="text" id="searchInput" placeholder="Search jobs (example: python)">
+
+    <select id="categoryFilter">
+        <option value="">All Categories</option>
+    </select>
+
+    <select id="sortJobs">
+        <option value="default">Sort Jobs</option>
+        <option value="az">A-Z</option>
+        <option value="za">Z-A</option>
+    </select>
+
+    <button onclick="searchJobs()">Search</button>
+</section>
+
+<p id="status"></p>
+
+<main id="jobsContainer"></main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
