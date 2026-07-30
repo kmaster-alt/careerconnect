@@ -2,11 +2,15 @@
 
 CareerConnect is a web application that helps users find remote job opportunities easily. Users can search for jobs by keyword, filter jobs by category, and sort job results alphabetically.
 
+## Live Demo
+
+http://3.83.235.8
+
 ## Features
 
-- Search remote jobs by keyword
+- Search remote jobs by keyword (press Enter or click Search)
 - Filter jobs by category
-- Sort jobs from A-Z and Z-A
+- Sort jobs from A-Z and Z-A (works together with the category filter)
 - Responsive design for different devices
 - Displays job title, company, location, category, and application link
 - Handles API errors with user-friendly messages
@@ -28,6 +32,10 @@ Credit:
 
 Remotive API  
 https://remotive.com/
+
+## API Key / Credentials
+
+This project does not require any API key, login, or credentials to run. The Remotive API is public and free to use with no authentication.
 
 ## Technologies Used
 
@@ -95,19 +103,11 @@ CareerConnect was deployed on the provided web infrastructure using two web serv
 
 ### Web01
 
-IP Address:
-
-```
-44.212.4.142
-```
+IP Address: 44.212.4.142
 
 ### Web02
 
-IP Address:
-
-```
-44.205.246.49
-```
+IP Address: 44.205.246.49
 
 The application files were copied to both servers and hosted using Nginx.
 
@@ -130,6 +130,8 @@ Nginx was restarted:
 ```bash
 sudo systemctl restart nginx
 ```
+
+> Note: For subsequent updates, individual files (e.g. `script.js`) were copied directly to `/tmp/` on each server and then moved into `/var/www/html/`, without restarting Nginx (not required for static file changes).
 
 # Load Balancer Configuration
 
