@@ -28,9 +28,7 @@ The API provides remote job listings from different companies around the world.
 
 No API key is required.
 
-Credit:
-
-Remotive API  
+Credit: Remotive API  
 https://remotive.com/
 
 ## API Key / Credentials
