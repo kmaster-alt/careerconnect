@@ -1,6 +1,8 @@
 const API_URL = "https://remotive.com/api/remote-jobs";
 
 let allJobs = [];
+let currentCategory = "";
+let currentSort = "default";
 
 window.onload = () => {
     fetchJobs();
@@ -21,9 +23,13 @@ async function fetchJobs(keyword = "") {
         const data = await response.json();
 
         allJobs = data.jobs;
+        currentCategory = "";
+        currentSort = "default";
+        document.getElementById("categoryFilter").value = "";
+        document.getElementById("sortJobs").value = "default";
 
         createCategories();
-        displayJobs(allJobs);
+        render();
 
         status.innerHTML = `${allJobs.length} jobs found`;
 
@@ -31,6 +37,12 @@ async function fetchJobs(keyword = "") {
         status.innerHTML = "Unable to load jobs. Please try again later.";
         console.log(error);
     }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text ?? "";
+    return div.innerHTML;
 }
 
 function displayJobs(jobs) {
@@ -46,20 +58,40 @@ function displayJobs(jobs) {
     jobs.forEach(job => {
         container.innerHTML += `
         <div class="job-card">
-            <h2>${job.title}</h2>
-            <p><b>Company:</b> ${job.company_name}</p>
-            <p><b>Location:</b> ${job.candidate_required_location}</p>
-            <p><b>Category:</b> ${job.category}</p>
+            <h2>${escapeHtml(job.title)}</h2>
+            <p><b>Company:</b> ${escapeHtml(job.company_name)}</p>
+            <p><b>Location:</b> ${escapeHtml(job.candidate_required_location)}</p>
+            <p><b>Category:</b> ${escapeHtml(job.category)}</p>
             <a href="${job.url}" target="_blank">Apply Now</a>
         </div>
         `;
     });
 }
 
+function render() {
+    let jobs = allJobs.filter(job => currentCategory === "" || job.category === currentCategory);
+
+    if (currentSort === "az") {
+        jobs.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    if (currentSort === "za") {
+        jobs.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    displayJobs(jobs);
+}
+
 function searchJobs() {
     const keyword = document.getElementById("searchInput").value;
     fetchJobs(keyword);
 }
+
+document.getElementById("searchInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        searchJobs();
+    }
+});
 
 function createCategories() {
     const select = document.getElementById("categoryFilter");
@@ -70,34 +102,18 @@ function createCategories() {
 
     categories.forEach(category => {
         select.innerHTML += `
-        <option value="${category}">
-            ${category}
+        <option value="${escapeHtml(category)}">
+            ${escapeHtml(category)}
         </option>`;
     });
 }
 
 document.getElementById("categoryFilter").addEventListener("change", function() {
-    const selected = this.value;
-
-    const filtered = allJobs.filter(job => {
-        return selected === "" || job.category === selected;
-    });
-
-    displayJobs(filtered);
+    currentCategory = this.value;
+    render();
 });
 
 document.getElementById("sortJobs").addEventListener("change", function() {
-    const option = this.value;
-
-    let sorted = [...allJobs];
-
-    if (option === "az") {
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    if (option === "za") {
-        sorted.sort((a, b) => b.title.localeCompare(a.title));
-    }
-
-    displayJobs(sorted);
+    currentSort = this.value;
+    render();
 });
