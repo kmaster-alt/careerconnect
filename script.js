@@ -1,4 +1,3 @@
-alert("NEW SCRIPT LOADED");
 const API_URL = "https://remotive.com/api/remote-jobs";
 
 let allJobs = [];
