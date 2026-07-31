@@ -33,7 +33,17 @@ https://remotive.com/
 
 ## API Key / Credentials
 
-This project does not require any API key, login, or credentials to run. The Remotive API is public and free to use with no authentication.
+This project uses the Remotive Remote Jobs API.
+
+The endpoint used in this project is publicly accessible and does **not** require an API key. Therefore, there are no API credentials to include or protect.
+
+No login credentials are required to run this application.
+
+API Documentation:
+https://remotive.com/api-documentation
+
+If an API key were required, it would be stored securely and excluded from the public repository.
+
 
 ## Technologies Used
 
