@@ -26,8 +26,6 @@ https://remotive.com/api/remote-jobs
 
 The API provides remote job listings from different companies around the world.
 
-No API key is required.
-
 Credit: Remotive API  
 https://remotive.com/
 
@@ -43,7 +41,6 @@ API Documentation:
 https://remotive.com/api-documentation
 
 If an API key were required, it would be stored securely and excluded from the public repository.
-
 
 ## Technologies Used
 
