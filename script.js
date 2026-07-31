@@ -14,7 +14,7 @@ async function fetchJobs(keyword = "") {
     status.innerHTML = "Loading jobs...";
 
     try {
-        const response = await fetch(`${API_URL}?search=${keyword}`);
+        const response = await fetch(`${API_URL}?search=${encodeURIComponent(keyword)}`);
 
         if (!response.ok) {
             throw new Error("API unavailable");
@@ -23,10 +23,6 @@ async function fetchJobs(keyword = "") {
         const data = await response.json();
 
         allJobs = data.jobs;
-        currentCategory = "";
-        currentSort = "default";
-        document.getElementById("categoryFilter").value = "";
-        document.getElementById("sortJobs").value = "default";
 
         createCategories();
         render();
@@ -69,7 +65,9 @@ function displayJobs(jobs) {
 }
 
 function render() {
-    let jobs = allJobs.filter(job => currentCategory === "" || job.category === currentCategory);
+    let jobs = allJobs.filter(job =>
+        currentCategory === "" || job.category === currentCategory
+    );
 
     if (currentSort === "az") {
         jobs.sort((a, b) => a.title.localeCompare(b.title));
@@ -83,7 +81,11 @@ function render() {
 }
 
 function searchJobs() {
-    const keyword = document.getElementById("searchInput").value;
+    currentCategory = document.getElementById("categoryFilter").value;
+    currentSort = document.getElementById("sortJobs").value;
+
+    const keyword = document.getElementById("searchInput").value.trim();
+
     fetchJobs(keyword);
 }
 
@@ -95,25 +97,19 @@ document.getElementById("searchInput").addEventListener("keydown", function(e) {
 
 function createCategories() {
     const select = document.getElementById("categoryFilter");
+    const previousValue = select.value;
 
-    const categories = [...new Set(allJobs.map(job => job.category))];
+    const categories = [...new Set(allJobs.map(job => job.category))].sort();
 
     select.innerHTML = `<option value="">All Categories</option>`;
 
     categories.forEach(category => {
         select.innerHTML += `
-        <option value="${escapeHtml(category)}">
-            ${escapeHtml(category)}
-        </option>`;
+        <option value="${escapeHtml(category)}">${escapeHtml(category)}</option>
+        `;
     });
+
+    if ([...select.options].some(option => option.value === previousValue)) {
+        select.value = previousValue;
+    }
 }
-
-document.getElementById("categoryFilter").addEventListener("change", function() {
-    currentCategory = this.value;
-    render();
-});
-
-document.getElementById("sortJobs").addEventListener("change", function() {
-    currentSort = this.value;
-    render();
-});
